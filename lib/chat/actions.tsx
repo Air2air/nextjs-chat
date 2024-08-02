@@ -31,11 +31,8 @@ import {
   sleep,
   nanoid
 } from '@/lib/utils'
-import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
-import { auth } from '@/auth'
-import { systemPrompt } from '../../data/systemPrompt';
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -54,7 +51,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   const systemMessage = createStreamableUI(null)
 
   runAsyncFnWithoutBlocking(async () => {
-    await sleep(10)
+    await sleep(1000)
 
     purchasing.update(
       <div className="inline-flex items-start gap-1 md:items-center">
@@ -65,7 +62,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
       </div>
     )
 
-    await sleep(10)
+    await sleep(1000)
 
     purchasing.done(
       <div>
@@ -128,9 +125,23 @@ async function submitUserMessage(content: string) {
   let textNode: undefined | React.ReactNode
 
   const result = await streamUI({
-    model: openai('gpt-3.5-turbo'),
+    model: openai('gpt-4o-mini'),
     initial: <SpinnerMessage />,
-    system: systemPrompt,
+    system: `\
+    You are a stock trading conversation bot and you can help users buy stocks, step by step.
+    You and the user can discuss stock prices and the user can adjust the amount of stocks they want to buy, or place an order, in the UI.
+    
+    Messages inside [] means that it's a UI element or a user event. For example:
+    - "[Price of AAPL = 100]" means that an interface of the stock price of AAPL is shown to the user.
+    - "[User has changed the amount of AAPL to 10]" means that the user has changed the amount of AAPL to 10 in the UI.
+    
+    If the user requests purchasing a stock, call \`show_stock_purchase_ui\` to show the purchase UI.
+    If the user just wants the price, call \`show_stock_price\` to show the price.
+    If you want to show trending stocks, call \`list_stocks\`.
+    If you want to show events, call \`get_events\`.
+    If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
+    
+    Besides that, you can also chat with users and do some calculations if needed.`,
     messages: [
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
@@ -182,7 +193,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(10)
+          await sleep(1000)
 
           const toolCallId = nanoid()
 
@@ -243,7 +254,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(10)
+          await sleep(1000)
 
           const toolCallId = nanoid()
 
@@ -420,7 +431,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(10)
+          await sleep(1000)
 
           const toolCallId = nanoid()
 
@@ -491,47 +502,36 @@ export const AI = createAI<AIState, UIState>({
   onGetUIState: async () => {
     'use server'
 
-    const session = await auth()
+    // Remove the auth dependency
+    const aiState = getAIState() as Chat
 
-    if (session && session.user) {
-      const aiState = getAIState() as Chat
-
-      if (aiState) {
-        const uiState = getUIStateFromAIState(aiState)
-        return uiState
-      }
-    } else {
-      return
+    if (aiState) {
+      const uiState = getUIStateFromAIState(aiState)
+      return uiState
     }
+
+    return
   },
+
   onSetAIState: async ({ state }) => {
     'use server'
 
-    const session = await auth()
+    // Remove the auth dependency
+    const { chatId, messages } = state
 
-    if (session && session.user) {
-      const { chatId, messages } = state
+    const createdAt = new Date()
+    const userId = 'anonymous' // Replace with the desired user ID
 
-      const createdAt = new Date()
-      const userId = session.user.id as string
-      const path = `/chat/${chatId}`
+    const newMessage: Message = {
+      id: nanoid(),
+      role: 'system',
 
-      const firstMessageContent = messages[0].content as string
-      const title = firstMessageContent.substring(0, 100)
-
-      const chat: Chat = {
-        id: chatId,
-        title,
-        userId,
-        createdAt,
-        messages,
-        path
-      }
-
-      await saveChat(chat)
-    } else {
-      return
+      content: 'Your purchase has been confirmed. Thank you for your order!'
     }
+
+    messages.push(newMessage)
+
+    // Don't return anything
   }
 })
 
