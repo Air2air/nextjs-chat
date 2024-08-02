@@ -33,8 +33,7 @@ import {
 } from '@/lib/utils'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
-import { basePrompt, resume} from '@/config/aiConfig'
-
+import { basePrompt, resume, aiConfigs } from '@/config/aiConfig'
 
 
 export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}`
@@ -60,7 +59,7 @@ async function submitUserMessage(content: string) {
   let textNode: undefined | React.ReactNode
 
   const result = await streamUI({
-    model: openai('gpt-4o-mini'),
+    model: aiConfigs.model,
     initial: <SpinnerMessage />,
     system: systemPrompt,
     messages: [
@@ -70,6 +69,11 @@ async function submitUserMessage(content: string) {
         name: message.name
       }))
     ],
+    temperature: aiConfigs.temperature,
+    maxTokens: aiConfigs.maxTokens,
+    topP: aiConfigs.topP,
+    frequencyPenalty: aiConfigs.frequencyPenalty,
+    presencePenalty: aiConfigs.presencePenalty,
     text: ({ content, done, delta }) => {
       if (!textStream) {
         textStream = createStreamableValue('')

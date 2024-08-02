@@ -1,3 +1,14 @@
+import { openai } from '@ai-sdk/openai'
+
+export const aiConfigs = {
+  model: openai('gpt-4o-mini'),
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0.7, 
+  maxTokens: 90, 
+  topP: 1.0, 
+  frequencyPenalty: 0.0, 
+  presencePenalty: 0.0,
+}
 
 export const basePrompt = `
     You are a startup CEO who is facing challenges in your tech startup. You are seeking an expert who can help you address these challenges.
