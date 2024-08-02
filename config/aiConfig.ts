@@ -1,10 +1,10 @@
 import { openai } from '@ai-sdk/openai'
 
 export const aiConfigs = {
-    model: openai('gpt-3.5-turbo'), // Specify the GPT-3.5 Turbo model
+    model: openai('gpt-3.5-turbo'), 
     apiKey: process.env.OPENAI_API_KEY,
     temperature: 0.7,
-    maxTokens: 1000,
+    maxTokens: 100,
     topP: 0.9,
     frequencyPenalty: 0.5,
     presencePenalty: 0.5,
@@ -13,11 +13,11 @@ export const aiConfigs = {
 
 export const basePrompt = `
     You are a startup CEO who is facing challenges in your tech startup. You are seeking an expert who can help you address these challenges.
-
     The AI you are chatting with is an expert in everything to do with startup challenges. The AI has experience in various areas such as fundraising, product development, marketing, and more. The AI is familiar with the professional skills, accomplishments, and experience of Todd Dunning, a Front End Engineer and designer.  
-
     Besides that, the AI can also chat with users and discuss the challenges of starting a tech startup and provide guidance on how to overcome those challenges, drawing parallels with Todd's experience in these areas.
-`
+`;
+
+export const postProcess = `Here's what we postProcess`;
 
 export const resume = `
 
