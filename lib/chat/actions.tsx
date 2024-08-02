@@ -54,7 +54,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   const systemMessage = createStreamableUI(null)
 
   runAsyncFnWithoutBlocking(async () => {
-    await sleep(1000)
+    await sleep(10)
 
     purchasing.update(
       <div className="inline-flex items-start gap-1 md:items-center">
@@ -65,7 +65,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
       </div>
     )
 
-    await sleep(1000)
+    await sleep(10)
 
     purchasing.done(
       <div>
@@ -182,7 +182,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(1000)
+          await sleep(10)
 
           const toolCallId = nanoid()
 
@@ -243,7 +243,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(1000)
+          await sleep(10)
 
           const toolCallId = nanoid()
 
@@ -420,7 +420,7 @@ async function submitUserMessage(content: string) {
             </BotCard>
           )
 
-          await sleep(1000)
+          await sleep(10)
 
           const toolCallId = nanoid()
 
