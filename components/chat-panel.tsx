@@ -11,7 +11,7 @@ import { useAIState, useActions, useUIState } from 'ai/rsc'
 import type { AI } from '@/lib/chat/actions'
 import { nanoid } from 'nanoid'
 import { UserMessage } from './stocks/message'
-import exampleData from '@/data/questions.json'
+import exampleData from '@/config/questions.json'
 
 export interface ChatPanelProps {
   id?: string

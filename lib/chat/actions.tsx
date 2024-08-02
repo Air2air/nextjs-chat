@@ -33,9 +33,11 @@ import {
 } from '@/lib/utils'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
-import { systemPrompt } from '@/pages/api/systemPrompt'
+import { basePrompt, resume} from '@/config/aiConfig'
 
 
+
+export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}`
 
 async function submitUserMessage(content: string) {
   'use server'
