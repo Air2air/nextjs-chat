@@ -443,7 +443,6 @@ export const AI = createAI<AIState, UIState>({
     const newMessage: Message = {
       id: nanoid(),
       role: 'system',
-
       content: 'Your purchase has been confirmed. Thank you for your order!'
     }
 
