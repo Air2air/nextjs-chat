@@ -1,6 +1,5 @@
 import 'server-only'
-import fs from 'fs/promises'
-import path from 'path'
+
 import {
   createAI,
   createStreamableUI,
@@ -36,13 +35,6 @@ import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { auth } from '@/auth'
-
-async function getResumeContent() {
-  const filePath = path.join(process.cwd(), 'data', 'resume.md')
-  const content = await fs.readFile(filePath, 'utf-8')
-  return content
-}
-
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -117,9 +109,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function submitUserMessage(content: string) {
   'use server'
 
-  const resumeContent = await getResumeContent();
-
-  const aiState = getMutableAIState<typeof AI>();
+  const aiState = getMutableAIState<typeof AI>()
 
   aiState.update({
     ...aiState.get(),
@@ -128,7 +118,7 @@ async function submitUserMessage(content: string) {
       {
         id: nanoid(),
         role: 'user',
-        content: `${content}\n\nContext:\n${resumeContent}`
+        content
       }
     ]
   })
@@ -140,16 +130,20 @@ async function submitUserMessage(content: string) {
     model: openai('gpt-4o-mini'),
     initial: <SpinnerMessage />,
     system: `\
-    You are a professional assistant chatbot, specialized in discussing professional skills, accomplishments, and experience.
-    You can help users understand and elaborate on their professional background, achievements, and skills in detail.
-
-    Messages inside [] means that it's a UI element or a user event. For example:
-    - "[User has mentioned their professional skills]" means that an interface of the user's skills is shown to the user.
-    - "[User has shared their accomplishments]" means that an interface of the user's accomplishments is displayed.
-    - "[User has discussed their experience]" means that an interface of the user's experience is presented.
+    You are a stock trading conversation bot and you can help users buy stocks, step by step.
+    You and the user can discuss stock prices and the user can adjust the amount of stocks they want to buy, or place an order, in the UI.
     
-    Use the information provided by the user to generate meaningful and contextually relevant responses that highlight their professional skills, accomplishments, and experience.
-  `,
+    Messages inside [] means that it's a UI element or a user event. For example:
+    - "[Price of AAPL = 100]" means that an interface of the stock price of AAPL is shown to the user.
+    - "[User has changed the amount of AAPL to 10]" means that the user has changed the amount of AAPL to 10 in the UI.
+    
+    If the user requests purchasing a stock, call \`show_stock_purchase_ui\` to show the purchase UI.
+    If the user just wants the price, call \`show_stock_price\` to show the price.
+    If you want to show trending stocks, call \`list_stocks\`.
+    If you want to show events, call \`get_events\`.
+    If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
+    
+    Besides that, you can also chat with users and do some calculations if needed.`,
     messages: [
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
