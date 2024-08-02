@@ -1,13 +1,14 @@
 import { openai } from '@ai-sdk/openai'
 
 export const aiConfigs = {
-  model: openai('gpt-4o-mini'),
-  apiKey: process.env.OPENAI_API_KEY,
-  temperature: 0.7, 
-  maxTokens: 90, 
-  topP: 1.0, 
-  frequencyPenalty: 0.0, 
-  presencePenalty: 0.0,
+    model: openai('gpt-3.5-turbo'), // Specify the GPT-3.5 Turbo model
+    apiKey: process.env.OPENAI_API_KEY,
+    temperature: 0.7,
+    maxTokens: 1000,
+    topP: 0.9,
+    frequencyPenalty: 0.5,
+    presencePenalty: 0.5,
+    stopSequences: ['\n\n']
 }
 
 export const basePrompt = `
