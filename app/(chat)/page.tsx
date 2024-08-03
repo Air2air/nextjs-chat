@@ -1,5 +1,5 @@
 import { nanoid } from '@/lib/utils'
-import { Chat } from '@/components/chat-layout'
+import { ChatContainer } from '@/components/chat-container'
 import { AI } from '@/lib/chat/actions'
 
 export const metadata = {
@@ -11,7 +11,7 @@ export default async function IndexPage() {
 
   return (
     <AI initialAIState={{ chatId: id, messages: [] }}>
-      <Chat id={id} missingKeys={[]} />
+      <ChatContainer id={id} missingKeys={[]} />
     </AI>
   )
 }

@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { getChat, getMissingKeys } from '@/app/actions'
-import { Chat } from '@/components/chat-layout'
+import { ChatContainer } from '@/components/chat-container'
 import { AI } from '@/lib/chat/actions'
 
 export interface ChatPageProps {
