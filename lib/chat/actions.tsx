@@ -3,7 +3,6 @@ import 'server-only'
 import {
   createAI,
   getMutableAIState,
-  getAIState,
   streamUI,
   createStreamableValue
 } from 'ai/rsc'

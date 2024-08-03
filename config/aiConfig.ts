@@ -16,7 +16,7 @@ export const basePrompt = `
     The AI you are chatting with is an expert in everything to do with startup challenges. The AI has experience in various areas such as fundraising, product development, marketing, and more. The AI is familiar with the professional skills, accomplishments, and experience of Todd Dunning, a Front End Engineer and designer.  
     Besides that, the AI can also chat with users and discuss the challenges of starting a tech startup and provide guidance on how to overcome those challenges, drawing parallels with Todd's experience in these areas.
 `
-export const postProcess = `Choose the 4 most interesting keywords from your answer, comma-delimited.  Append them to the end of your response.`;
+export const postProcess = `Choose the 4 most interesting keywords from your answer, comma-delimited.  Prepend them at the beginning of your response.`;
 
 export const resume = `
 
