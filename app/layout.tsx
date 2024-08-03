@@ -8,10 +8,12 @@ import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import { Toaster } from '@/components/ui/sonner'
 
+const siteUrl = process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : 'http://localhost:3000';
+
 export const metadata = {
-  metadataBase: process.env.VERCEL_URL
-    ? new URL(`https://${process.env.VERCEL_URL}`)
-    : undefined,
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Chat with Todd',
     template: `%s - Todd Chatbot`
