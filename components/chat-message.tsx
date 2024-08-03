@@ -2,7 +2,6 @@ import React from 'react'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { MemoizedReactMarkdown } from '@/components/markdown'
-import { CodeBlock } from '@/components/ui/codeblock'
 import { cn } from '@/lib/utils'
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
 

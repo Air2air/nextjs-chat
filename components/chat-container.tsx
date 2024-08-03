@@ -3,8 +3,7 @@
 import { cn } from '@/lib/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatInputPanel } from '@/components/chat-input-panel'
-import { EmptyScreen } from '@/components/empty-screen'
-import { useLocalStorage } from '@/lib/hooks/use-local-storage'
+
 import { useEffect, useState } from 'react'
 import { useUIState, useAIState } from 'ai/rsc'
 import { Message, Session } from '@/lib/types'
