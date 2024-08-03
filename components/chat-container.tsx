@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils'
 import { ChatList } from '@/components/chat-list'
-import { ChatPanel } from '@/components/chat-panel'
+import { ChatInputPanel } from '@/components/chat-input-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { useEffect, useState } from 'react'
@@ -72,7 +72,7 @@ export function ChatContainer({ id, className, session, missingKeys }: ChatConta
         )}
         <div className="w-full h-px" ref={visibilityRef} />
       </div>
-      <ChatPanel
+      <ChatInputPanel
         id={id}
         input={input}
         setInput={setInput}

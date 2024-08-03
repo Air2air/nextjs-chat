@@ -7,7 +7,7 @@ import exampleData from '@/config/questions.json'
 import { FooterText } from './footer'
 import { PromptForm } from './prompt-form'
 
-export interface ChatPanelProps {
+export interface ChatInputPanelProps {
   id?: string
   title?: string
   input: string
@@ -29,14 +29,14 @@ const prepareExampleMessages = (data: any[]) =>
 
 const exampleMessages = prepareExampleMessages(exampleData)
 
-export function ChatPanel({
+export function ChatInputPanel({
   id,
   title,
   input,
   setInput,
   isAtBottom,
   scrollToBottom
-}: ChatPanelProps) {
+}: ChatInputPanelProps) {
   const [aiState] = useAIState()
   const [messages, setMessages] = useUIState()
   const { submitUserMessage } = useActions()
