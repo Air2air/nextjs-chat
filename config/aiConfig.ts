@@ -23,7 +23,7 @@ export const postProcess = `Before sending your message response, follow these s
 3. List these keywords in a comma-delimited format.
 4. Include this list of 4 keywords at the beginning of your message response.
 
-Ensure that every message response starts with a new selection of these 4 keywords.`;
+Ensure that every message response starts with a new selection of these 4 keywords.`
 
 export const resume = `
 

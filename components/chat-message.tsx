@@ -7,32 +7,41 @@ import { cn } from '@/lib/utils'
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
 
 
-type ChatMessageProps = {
+
+type ChatMessageRole = 'user' | 'assistant';
+
+interface ChatMessageProps {
   message: {
     content: string;
-    role: 'user' | 'assistant'; // assuming only two roles
+    role: ChatMessageRole;
   };
-  className?: string; // assuming additional props like className
-  // add other props as needed
-};
+  className?: string;
+}
 
-export function ChatMessage({ message, ...props }: ChatMessageProps) {
+export const ChatMessage: React.FC<ChatMessageProps> = ({
+  message: { content, role },
+  className,
+}) => {
+  const icon = role === 'user' ? <IconUser /> : <IconOpenAI />;
+  const backgroundColor = role === 'assistant' ? 'red-500' : 'background';
+
   return (
-    <div className={cn('group relative mb-4 flex items-start md:-ml-12', {
-      'bg-red-500': message.role === 'assistant',
-      'bg-background': message.role === 'user',
-    })} {...props}>
+    <div
+      className={cn('group relative mb-4 flex items-start md:-ml-12', {
+        [`bg-${backgroundColor}`]: true,
+      })}
+    >
       <div className="flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow">
-        {message.role === 'user' ? <IconUser /> : <IconOpenAI />}
+        {icon}
       </div>
       <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}
         >
-          {message.content}
+          {content}
         </MemoizedReactMarkdown>
       </div>
     </div>
-  )
-}
+  );
+};

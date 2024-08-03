@@ -1,9 +1,10 @@
 import React from 'react'
-
 import { cn } from '@/lib/utils'
-import { ExternalLink } from '@/components/external-link'
 
-export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
+
+interface FooterTextProps extends React.ComponentPropsWithoutRef<'p'> {}
+
+export function FooterText({ className, ...props }: FooterTextProps) {
   return (
     <p
       className={cn(
@@ -11,6 +12,6 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
         className
       )}
       {...props}
-    ></p>
+    />
   )
 }

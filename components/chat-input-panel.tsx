@@ -85,17 +85,24 @@ export function ChatInputPanel({
   )
 }
 
+
 interface ExampleCardProps {
-  example: any
+  example: {
+    heading: string
+    subheading: string
+  }
   onClick: () => void
 }
 
-const ExampleCard: React.FC<ExampleCardProps> = ({ example, onClick }) => (
+const ExampleCard: React.FC<ExampleCardProps> = ({
+  example: { heading, subheading },
+  onClick
+}) => (
   <div
     className="cursor-pointer rounded-lg border bg-white p-4 hover:bg-zinc-50 dark:bg-zinc-950 dark:hover:bg-zinc-900"
     onClick={onClick}
   >
-    <div className="text-sm font-semibold">{example.heading}</div>
-    <div className="text-xs">{example.subheading}</div>
+    <div className="text-sm font-semibold">{heading}</div>
+    <div className="text-xs">{subheading}</div>
   </div>
 )

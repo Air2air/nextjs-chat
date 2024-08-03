@@ -7,13 +7,13 @@ import {
   createStreamableValue
 } from 'ai/rsc'
 
-
 import { nanoid } from '@/lib/utils'
 import { BotMessage, SpinnerMessage } from '@/components/message'
 import { Message } from '@/lib/types'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
 
 export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nBefore returning your response you must follow this instruction:${postProcess}`
+
 
 async function submitUserMessage(content: string) {
   'use server'
