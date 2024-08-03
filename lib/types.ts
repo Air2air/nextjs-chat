@@ -1,7 +1,27 @@
 import { CoreMessage } from 'ai'
 
-export type Message = CoreMessage & {
+export type Message = {
   id: string
+  role: 'user' | 'system' | 'assistant'
+  content: string
+}
+
+// Define the type for an AI message object
+export type AIMessageObject = {
+  id: string
+  content: string
+}
+
+// Define the type for the AI state
+export type AIState = {
+  messages: Message[]
+  aiMessageObjects: AIMessageObject[]
+}
+
+// Define the type for the UI state
+export type UIState = {
+  loading: boolean
+  error?: string
 }
 
 export interface Chat extends Record<string, any> {
