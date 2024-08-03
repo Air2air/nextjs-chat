@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { Button } from '@/components/ui/button'
 import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { nanoid } from 'nanoid'
-import { UserMessage } from './stocks/message'
+import { UserMessage } from './message'
 import exampleData from '@/config/questions.json'
 import { FooterText } from './footer'
 import { PromptForm } from './prompt-form'
@@ -41,7 +40,6 @@ export function ChatPanel({
   const [aiState] = useAIState()
   const [messages, setMessages] = useUIState()
   const { submitUserMessage } = useActions()
-  // const [shareDialogOpen, setShareDialogOpen] = React.useState(false);
 
   const handleExampleClick = async (example: any) => {
     const newMessage: Message = {

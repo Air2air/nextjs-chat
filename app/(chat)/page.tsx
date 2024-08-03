@@ -1,5 +1,5 @@
 import { nanoid } from '@/lib/utils'
-import { Chat } from '@/components/chat'
+import { Chat } from '@/components/chat-layout'
 import { AI } from '@/lib/chat/actions'
 
 export const metadata = {
