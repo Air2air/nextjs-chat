@@ -14,7 +14,7 @@ import { SpinnerMessage } from '@/components/stocks/message'
 import { Message } from '@/lib/types'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
 
-export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nAlso, follow this instruction:${postProcess}`;
+export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nBefore returning your response you must follow this instruction:${postProcess}`;
 
 async function submitUserMessage(content: string) {
   'use server'
