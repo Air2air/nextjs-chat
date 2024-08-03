@@ -8,20 +8,14 @@ import {
   createStreamableValue
 } from 'ai/rsc'
 
-import { BotCard, BotMessage, Stock, Purchase } from '@/components/stocks'
-
-import { z } from 'zod'
-
-import { Events } from '@/components/stocks/events'
-
-import { Stocks } from '@/components/stocks/stocks'
+import { BotMessage } from '@/components/stocks'
 
 import { nanoid } from '@/lib/utils'
-import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
-import { Chat, Message } from '@/lib/types'
-import { basePrompt, resume, aiConfigs } from '@/config/aiConfig'
+import { SpinnerMessage } from '@/components/stocks/message'
+import { Message } from '@/lib/types'
+import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
 
-export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}`
+export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nAlso, follow this instruction:${postProcess}`;
 
 async function submitUserMessage(content: string) {
   'use server'
@@ -108,29 +102,12 @@ export const AI = createAI<AIState, UIState>({
     submitUserMessage
   },
   initialUIState: [],
-  // initialAIState: { chatId: nanoid(), messages: [] },
-  // onGetUIState: async () => {
-  //   'use server'
-
-  //   // Remove the auth dependency
-  //   const aiState = getAIState() as Chat
-
-  //   if (aiState) {
-  //     // const uiState = getUIStateFromAIState(aiState)
-  //     // return uiState
-  //   }
-
-  //   return
-  // },
 
   onSetAIState: async ({ state }) => {
     'use server'
 
     // Remove the auth dependency
-    const { chatId, messages } = state
-
-    const createdAt = new Date()
-    const userId = 'anonymous' // Replace with the desired user ID
+    const { messages } = state
 
     const newMessage: Message = {
       id: nanoid(),
@@ -139,47 +116,5 @@ export const AI = createAI<AIState, UIState>({
     }
 
     messages.push(newMessage)
-
-    // Don't return anything
   }
 })
-
-// export const getUIStateFromAIState = (aiState: Chat) => {
-//   return aiState.messages
-//     .filter(message => message.role !== 'system')
-//     .map((message, index) => ({
-//       id: `${aiState.chatId}-${index}`,
-//       display:
-//         message.role === 'tool' ? (
-//           message.content.map(tool => {
-//             return tool.toolName === 'listStocks' ? (
-//               <BotCard>
-//                 {/* TODO: Infer types based on the tool result*/}
-//                 {/* @ts-expect-error */}
-//                 <Stocks props={tool.result} />
-//               </BotCard>
-//             ) : tool.toolName === 'showStockPrice' ? (
-//               <BotCard>
-//                 {/* @ts-expect-error */}
-//                 <Stock props={tool.result} />
-//               </BotCard>
-//             ) : tool.toolName === 'showStockPurchase' ? (
-//               <BotCard>
-//                 {/* @ts-expect-error */}
-//                 <Purchase props={tool.result} />
-//               </BotCard>
-//             ) : tool.toolName === 'getEvents' ? (
-//               <BotCard>
-//                 {/* @ts-expect-error */}
-//                 <Events props={tool.result} />
-//               </BotCard>
-//             ) : null
-//           })
-//         ) : message.role === 'user' ? (
-//           <UserMessage>{message.content as string}</UserMessage>
-//         ) : message.role === 'assistant' &&
-//           typeof message.content === 'string' ? (
-//           <BotMessage content={message.content} />
-//         ) : null
-//     }))
-// }
