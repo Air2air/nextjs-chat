@@ -7,10 +7,9 @@ import {
   createStreamableValue
 } from 'ai/rsc'
 
-import { BotMessage } from '@/components/stocks'
 
 import { nanoid } from '@/lib/utils'
-import { SpinnerMessage } from '@/components/message'
+import { BotMessage, SpinnerMessage } from '@/components/message'
 import { Message } from '@/lib/types'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
 

@@ -25,14 +25,11 @@ export function ChatContainer({ id, className, session, missingKeys }: ChatConta
   const [input, setInput] = useState('')
   const [messages] = useUIState()
   const [aiState] = useAIState()
-
-  const [_, setNewChatId] = useLocalStorage('newChatId', id)
+  const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } = useScrollAnchor()
 
   useEffect(() => {
-    if (session?.user && path) {
-      if (!path.includes('chat') && messages.length === 1) {
-        window.history.replaceState({}, '', `/chat/${id}`)
-      }
+    if (session?.user && !path.includes('chat') && messages.length === 1) {
+      window.history.replaceState({}, '', `/chat/${id}`)
     }
   }, [id, path, session?.user, messages])
 
@@ -44,32 +41,15 @@ export function ChatContainer({ id, className, session, missingKeys }: ChatConta
   }, [aiState.messages, router])
 
   useEffect(() => {
-    setNewChatId(id)
-  })
-
-  useEffect(() => {
     missingKeys.map(key => {
       toast.error(`Missing ${key} environment variable!`)
     })
   }, [missingKeys])
 
-  const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
-    useScrollAnchor()
-
   return (
-    <div
-      className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
-      ref={scrollRef}
-    >
-      <div
-        className={cn('pb-[200px] pt-4 md:pt-10', className)}
-        ref={messagesRef}
-      >
-        {messages.length ? (
-          <ChatList messages={messages} isShared={false} session={session} />
-        ) : (
-''
-        )}
+    <div className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]">
+      <div className={cn('pb-[200px] pt-4 md:pt-10', className)} ref={messagesRef}>
+        {messages.length && <ChatList messages={messages} isShared={false} session={session} />}
         <div className="w-full h-px" ref={visibilityRef} />
       </div>
       <ChatInputPanel
