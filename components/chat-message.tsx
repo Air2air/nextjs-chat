@@ -5,29 +5,27 @@ import { MemoizedReactMarkdown } from '@/components/markdown'
 import { cn } from '@/lib/utils'
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
 
-
-
-type ChatMessageRole = 'user' | 'assistant';
+type ChatMessageRole = 'user' | 'assistant'
 
 interface ChatMessageProps {
   message: {
-    content: string;
-    role: ChatMessageRole;
-  };
-  className?: string;
+    content: string
+    role: ChatMessageRole
+  }
+  className?: string
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({
   message: { content, role },
-  className,
+  className
 }) => {
-  const icon = role === 'user' ? <IconUser /> : <IconOpenAI />;
-  const backgroundColor = role === 'assistant' ? 'red-500' : 'background';
+  const icon = role === 'user' ? <IconUser /> : <IconOpenAI />
+  const backgroundColor = role === 'assistant' ? 'red-500' : 'background'
 
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12', {
-        [`bg-${backgroundColor}`]: true,
+        [`bg-${backgroundColor}`]: true
       })}
     >
       <div className="flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow">
@@ -42,5 +40,5 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         </MemoizedReactMarkdown>
       </div>
     </div>
-  );
-};
+  )
+}

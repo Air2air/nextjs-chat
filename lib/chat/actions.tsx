@@ -8,12 +8,12 @@ import {
 } from 'ai/rsc'
 
 import { nanoid } from '@/lib/utils'
-import { BotMessage, SpinnerMessage } from '@/components/message'
-import { Message } from '@/lib/types'
+import { Message, SpinnerMessage} from '@/components/message'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
+import { MessageType } from '@/lib/types'; // Ensure you import the Message type correctly
+
 
 export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nBefore returning your response you must follow this instruction:${postProcess}`
-
 
 async function submitUserMessage(content: string) {
   'use server'
@@ -55,7 +55,7 @@ async function submitUserMessage(content: string) {
     text: ({ content, done, delta }) => {
       if (!textStream) {
         textStream = createStreamableValue('')
-        textNode = <BotMessage content={textStream.value} />
+        textNode = <Message content={textStream.value} icon={'openai'} />
       }
 
       if (done) {
@@ -68,7 +68,7 @@ async function submitUserMessage(content: string) {
               id: nanoid(),
               role: 'assistant',
               content
-            }
+            } as MessageType
           ]
         })
       } else {
@@ -87,7 +87,7 @@ async function submitUserMessage(content: string) {
 
 export type AIState = {
   chatId: string
-  messages: Message[]
+  messages: MessageType[]; // Ensure the correct type is used here
 }
 
 export type UIState = {
@@ -104,10 +104,8 @@ export const AI = createAI<AIState, UIState>({
   onSetAIState: async ({ state }) => {
     'use server'
 
-    // Remove the auth dependency
     const { messages } = state
-
-    const newMessage: Message = {
+    const newMessage: MessageType = {
       id: nanoid(),
       role: 'system',
       content: 'Your purchase has been confirmed. Thank you for your order!'

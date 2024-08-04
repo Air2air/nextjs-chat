@@ -6,13 +6,13 @@ import { ChatInputPanel } from '@/components/chat-input-panel'
 
 import { useEffect, useState } from 'react'
 import { useUIState, useAIState } from 'ai/rsc'
-import { Message, Session } from '@/lib/types'
+import { MessageType, Session } from '@/lib/types'
 import { usePathname, useRouter } from 'next/navigation'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
 
 export interface ChatContainerProps extends React.ComponentProps<'div'> {
-  initialMessages?: Message[]
+  initialMessages?: MessageType[]
   id?: string
   session?: Session
   missingKeys: string[]

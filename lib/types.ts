@@ -1,6 +1,6 @@
 import { CoreMessage } from 'ai'
 
-export type Message = {
+export type MessageType = {
   id: string
   role: 'user' | 'system' | 'assistant'
   content: string
@@ -14,7 +14,7 @@ export type AIMessageObject = {
 
 // Define the type for the AI state
 export type AIState = {
-  messages: Message[]
+  messages: MessageType[]
   aiMessageObjects: AIMessageObject[]
 }
 
@@ -30,7 +30,7 @@ export interface Chat extends Record<string, any> {
   createdAt: Date
   userId: string
   path: string
-  messages: Message[]
+  messages: MessageType[]
   sharePath?: string
 }
 

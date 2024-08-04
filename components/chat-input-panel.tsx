@@ -2,10 +2,11 @@ import * as React from 'react'
 import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { nanoid } from 'nanoid'
-import { UserMessage } from './message'
+import { Message } from './message'
 import exampleData from '@/config/questions.json'
 import { FooterText } from './footer'
 import { PromptForm } from './prompt-form'
+import { MessageType } from '@/lib/types'
 
 export interface ChatInputPanelProps {
   id?: string
@@ -44,16 +45,16 @@ export function ChatInputPanel({
   const handleExampleClick = async (example: any) => {
     const newMessage: Message = {
       id: nanoid(),
-      display: <UserMessage>{example.message}</UserMessage>
+      display: <Message icon={'openai'}>{example.message}</Message>
     }
 
-    setMessages((currentMessages: Message[]) => [
+    setMessages((currentMessages: MessageType[]) => [
       ...currentMessages,
       newMessage
     ])
 
     const responseMessage = await submitUserMessage(example.message)
-    setMessages((currentMessages: Message[]) => [
+    setMessages((currentMessages: MessageType[]) => [
       ...currentMessages,
       responseMessage
     ])
