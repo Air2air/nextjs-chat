@@ -9,6 +9,8 @@ export interface ChatListProps {
   isShared: boolean
 }
 
+
+
 export const ChatList = ({ messages, session, isShared }: ChatListProps) => {
   if (messages.length === 0) {
     return null
