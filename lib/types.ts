@@ -2,6 +2,7 @@ import { CoreMessage } from 'ai'
 
 export type MessageType = {
   id: string
+  display?: React.ReactNode;
   role: 'user' | 'system' | 'assistant'
   content: string
 }

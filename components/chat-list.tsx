@@ -1,17 +1,13 @@
 import { Separator } from '@/components/ui/separator'
-import { UIState } from '@/lib/chat/actions'
-import { Session } from '@/lib/types'
+import { MessageType } from '@/lib/types'
 import React from 'react'
 
-export interface ChatListProps {
-  messages: UIState
-  session?: Session
+interface ChatListProps {
+  messages: MessageType[]
   isShared: boolean
 }
 
-
-
-export const ChatList = ({ messages, session, isShared }: ChatListProps) => {
+export const ChatList: React.FC<ChatListProps> = ({ messages, isShared }) => {
   if (messages.length === 0) {
     return null
   }
