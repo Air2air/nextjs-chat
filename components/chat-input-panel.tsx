@@ -6,7 +6,7 @@ import exampleData from '@/config/questions.json'
 import { FooterText } from './layout/footer'
 import { PromptForm } from './prompt-form'
 import { MessageType } from '@/lib/types'
-import CardExample from './card-example'
+import Card from './card'
 
 export interface ChatInputPanelProps {
   id?: string
@@ -65,7 +65,7 @@ export function ChatInputPanel({
       <div className="mx-auto sm:max-w-2xl sm:px-4">
         <div className="mb-4 grid grid-cols-2 gap-2 px-4 sm:px-0">
           {exampleMessages.map(example => (
-            <CardExample
+            <Card
               key={example.heading}
               example={example}
               onClick={() => handleExampleClick(example)}

@@ -1,4 +1,4 @@
-interface CardExampleProps {
+interface CardProps {
     example: {
       heading: string
       subheading: string
@@ -6,7 +6,7 @@ interface CardExampleProps {
     onClick: () => void
   }
   
-  const CardExample: React.FC<CardExampleProps> = ({
+  const Card: React.FC<CardProps> = ({
     example: { heading, subheading },
     onClick
   }) => (
@@ -19,4 +19,4 @@ interface CardExampleProps {
     </div>
   )
   
-  export default CardExample
+  export default Card
