@@ -7,7 +7,7 @@ import {
   createStreamableValue
 } from 'ai/rsc'
 
-import { nanoid } from '@/lib/utils'
+import { nanoid } from '@/utils/utils'
 import { Message, SpinnerMessage} from '@/components/message'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
 import { MessageType } from '@/lib/types'; // Ensure you import the Message type correctly

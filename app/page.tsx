@@ -1,6 +1,6 @@
-import { nanoid } from '@/lib/utils'
+import { nanoid } from '@/utils/utils'
 import { ChatContainer } from '@/components/chat-container'
-import { AI } from '@/lib/chat/actions'
+import { AI } from '@/lib/actions'
 
 export const metadata = {
   title: 'Todd Chatbot'

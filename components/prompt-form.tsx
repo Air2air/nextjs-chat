@@ -6,7 +6,7 @@ import Textarea from 'react-textarea-autosize'
 import { useActions, useUIState } from 'ai/rsc'
 
 import { Message } from './message'
-import { type AI } from '@/lib/chat/actions'
+import { type AI } from '@/lib/actions'
 import { Button } from '@/components/ui/button'
 import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
 import {

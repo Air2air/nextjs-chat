@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatInputPanel } from '@/components/chat-input-panel'
 import { useEffect, useState } from 'react'

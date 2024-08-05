@@ -2,7 +2,7 @@
 
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
 import { spinner } from './ui/spinner'
-import { MemoizedReactMarkdown } from './markdown'
+import { MemoizedReactMarkdown } from '../utils/markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { StreamableValue, useStreamableValue } from 'ai/rsc'
