@@ -3,9 +3,9 @@ import { GeistMono } from 'geist/font/mono'
 
 import '@/app/globals.css'
 import { cn } from '@/utils/utils'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { Providers } from '@/components/providers'
-import { Header } from '@/components/header'
+import { TailwindIndicator } from '@/components/layout/tailwind-indicator'
+import { Providers } from '@/components/layout/providers'
+import { Header } from '@/components/layout/header'
 import { Toaster } from '@/components/ui/sonner'
 
 const siteUrl = process.env.VERCEL_URL 
