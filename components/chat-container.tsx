@@ -1,5 +1,4 @@
 'use client'
-
 import { cn } from '@/utils/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatInputPanel } from '@/components/chat-input-panel'
@@ -38,6 +37,11 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ id, missingKeys })
       toast.error(`Missing ${key} environment variable!`)
     })
   }, [missingKeys])
+
+  // Log messages to verify their structure
+  useEffect(() => {
+    console.log('Messages from useUIState:', messages)
+  }, [messages])
 
   return (
     <div className="group w-full overflow-auto pl-0">

@@ -20,6 +20,7 @@ async function submitUserMessage(content: string) {
 
   const aiState = getMutableAIState<typeof AI>()
 
+  // Add user message to the AI state with role 'user'
   aiState.update({
     ...aiState.get(),
     messages: [
@@ -87,7 +88,7 @@ async function submitUserMessage(content: string) {
 
 export type AIState = {
   chatId: string
-  messages: MessageType[]; // Ensure the correct type is used here
+  messages: MessageType[]; 
 }
 
 export type UIState = {

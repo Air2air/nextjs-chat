@@ -14,21 +14,33 @@ export const ChatList: React.FC<ChatListProps> = ({ messages, isShared }) => {
     return null
   }
 
+  console.log('Rendering ChatList with messages:', messages)
+
   return (
-    <div className="relative mx-auto max-w-2xl px-4">
-      {messages.map((message, index) => (
-        <React.Fragment key={message.id}>
-          {message.display !== undefined ? (
-            <div>{message.display}</div>
-          ) : (
-            <>
-              {message.role === 'user' && <UserMessage message={message} />}
-              {message.role === 'assistant' && <AssistantMessage message={message} />}
-            </>
-          )}
-          {index < messages.length - 1 && <Separator className="my-4" />}
-        </React.Fragment>
-      ))}
+    <div className="chat-list relative mx-auto max-w-2xl px-4">
+      {messages.map((message, index) => {
+        console.log('Processing message:', message)
+
+        if (!message.role) {
+          return (
+            <React.Fragment key={message.id}>
+              {/* <div className="bg-red-500"> */}
+                {message.role} {message.display}
+              {/* </div> */}
+              {index < messages.length - 1 && <Separator className="my-4" />}
+            </React.Fragment>
+          )
+        } else {
+          return (
+            <React.Fragment key={message.id}>
+              <div className="text-green-500">
+                {message.role} {message.display}
+              </div>
+              {index < messages.length - 1 && <Separator className="my-4" />}
+            </React.Fragment>
+          )
+        }
+      })}
     </div>
   )
 }

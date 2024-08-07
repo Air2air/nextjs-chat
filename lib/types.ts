@@ -1,8 +1,9 @@
 import { CoreMessage } from 'ai'
 
-export type MessageType = {
+// lib/types.ts
+export interface MessageType {
   id: string
-  display?: React.ReactNode;
+  display?: React.ReactNode
   role: 'user' | 'system' | 'assistant'
   content: string
 }
