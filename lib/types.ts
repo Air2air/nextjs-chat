@@ -3,7 +3,6 @@ import { CoreMessage } from 'ai'
 // lib/types.ts
 export interface MessageType {
   id: string
-  display?: React.ReactNode
   role: 'user' | 'system' | 'assistant'
   content: string
 }

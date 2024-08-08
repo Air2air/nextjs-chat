@@ -4,7 +4,6 @@ import { ChatList } from '@/components/chat-list'
 import { ChatInputPanel } from '@/components/chat-input-panel'
 import { useEffect, useState } from 'react'
 import { useUIState, useAIState } from 'ai/rsc'
-import { MessageType, Session } from '@/lib/types'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
 
@@ -46,7 +45,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ id, missingKeys })
   return (
     <div className="group w-full overflow-auto pl-0">
       <div className={cn('pb-[200px] pt-4 md:pt-10', 'chat-container')} ref={messagesRef}>
-        {messages.length && <ChatList messages={messages} isShared={false} />}
+        {messages.length > 0 && <ChatList messages={messages} />}
         <div className="w-full h-px" ref={visibilityRef} />
       </div>
       <ChatInputPanel

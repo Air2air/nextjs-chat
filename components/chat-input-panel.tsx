@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useAIState, useActions, useUIState } from 'ai/rsc'
 import { nanoid } from 'nanoid'
-import { Message } from './message'
+import { Message as MessageComponent } from './message'
 import exampleData from '@/config/questions.json'
 import { FooterText } from './layout/footer'
 import { PromptForm } from './prompt-form'
@@ -9,26 +9,21 @@ import { MessageType } from '@/lib/types'
 import Card from './card'
 
 export interface ChatInputPanelProps {
-  id?: string
-  title?: string
-  input: string
-  setInput: (value: string) => void
-  isAtBottom: boolean
-  scrollToBottom: () => void
-}
-
-interface Message {
-  id: string
-  display: React.ReactNode
+  id?: string;
+  title?: string;
+  input: string;
+  setInput: (value: string) => void;
+  isAtBottom: boolean;
+  scrollToBottom: () => void;
 }
 
 const prepareExampleMessages = (data: any[]) =>
   data.map(example => ({
     ...example,
     message: `${example.heading} ${example.subheading}`
-  }))
+  }));
 
-const exampleMessages = prepareExampleMessages(exampleData)
+const exampleMessages = prepareExampleMessages(exampleData);
 
 export function ChatInputPanel({
   id,
@@ -38,27 +33,28 @@ export function ChatInputPanel({
   isAtBottom,
   scrollToBottom
 }: ChatInputPanelProps) {
-  const [aiState] = useAIState()
-  const [messages, setMessages] = useUIState()
-  const { submitUserMessage } = useActions()
+  const [aiState] = useAIState();
+  const [messages, setMessages] = useUIState();
+  const { submitUserMessage } = useActions();
 
   const handleExampleClick = async (example: any) => {
-    const newMessage: Message = {
+    const newMessage: MessageType = {
       id: nanoid(),
-      display: <Message icon={'openai'}>{example.message}</Message>
-    }
+      role: 'user',
+      content: example.message
+    };
 
     setMessages((currentMessages: MessageType[]) => [
       ...currentMessages,
       newMessage
-    ])
+    ]);
 
-    const responseMessage = await submitUserMessage(example.message)
+    const responseMessage = await submitUserMessage(example.message);
     setMessages((currentMessages: MessageType[]) => [
       ...currentMessages,
       responseMessage
-    ])
-  }
+    ]);
+  };
 
   return (
     <div className="fixed inset-x-0 bottom-0 w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
@@ -78,5 +74,5 @@ export function ChatInputPanel({
         <FooterText className="hidden sm:block" />
       </div>
     </div>
-  )
+  );
 }

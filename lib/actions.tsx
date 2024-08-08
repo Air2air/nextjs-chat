@@ -8,10 +8,9 @@ import {
 } from 'ai/rsc'
 
 import { nanoid } from '@/utils/utils'
-import { Message, SpinnerMessage} from '@/components/message'
+import { Message, SpinnerMessage } from '@/components/message'
 import { basePrompt, resume, aiConfigs, postProcess } from '@/config/aiConfig'
-import { MessageType } from '@/lib/types'; // Ensure you import the Message type correctly
-
+import { MessageType } from '@/lib/types'
 
 export const systemPrompt = `${basePrompt}\n\nAdditional context in Todd's resume:\n${resume}\n\nBefore returning your response you must follow this instruction:${postProcess}`
 
@@ -20,7 +19,6 @@ async function submitUserMessage(content: string) {
 
   const aiState = getMutableAIState<typeof AI>()
 
-  // Add user message to the AI state with role 'user'
   aiState.update({
     ...aiState.get(),
     messages: [
@@ -41,7 +39,7 @@ async function submitUserMessage(content: string) {
     initial: <SpinnerMessage />,
     system: systemPrompt,
     messages: [
-      ...aiState.get().messages.map((message: any) => ({
+      ...aiState.get().messages.map((message: MessageType) => ({
         role: message.role,
         content: message.content,
         name: message.name
@@ -82,18 +80,18 @@ async function submitUserMessage(content: string) {
 
   return {
     id: nanoid(),
-    display: result.value
+    content: result.value
   }
 }
 
 export type AIState = {
   chatId: string
-  messages: MessageType[]; 
+  messages: MessageType[]
 }
 
 export type UIState = {
   id: string
-  display: React.ReactNode
+  content: string
 }[]
 
 export const AI = createAI<AIState, UIState>({

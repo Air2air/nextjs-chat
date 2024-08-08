@@ -1,46 +1,45 @@
-import React from 'react'
-import { Separator } from '@/components/ui/separator'
-import { MessageType } from '@/lib/types'
-import { UserMessage } from './UserMessage'
-import { AssistantMessage } from './AssistantMessage'
+import React from 'react';
+import { Separator } from '@/components/ui/separator';
+import { MessageType } from '@/lib/types';
 
 interface ChatListProps {
-  messages: MessageType[]
-  isShared: boolean
+  messages: MessageType[];
 }
 
-export const ChatList: React.FC<ChatListProps> = ({ messages, isShared }) => {
+export const ChatList: React.FC<ChatListProps> = ({ messages }) => {
   if (messages.length === 0) {
-    return null
+    return null;
   }
 
-  console.log('Rendering ChatList with messages:', messages)
+  console.log('Rendering ChatList with messages:', messages);
 
   return (
     <div className="chat-list relative mx-auto max-w-2xl px-4">
       {messages.map((message, index) => {
-        console.log('Processing message:', message)
+        const { id, role, content } = message;
 
-        if (!message.role) {
+        console.log('Processing message:', message);
+
+        if (!role || (role !== 'user' && role !== 'assistant')) {
           return (
-            <React.Fragment key={message.id}>
-              {/* <div className="bg-red-500"> */}
-                {message.role} {message.display}
-              {/* </div> */}
-              {index < messages.length - 1 && <Separator className="my-4" />}
-            </React.Fragment>
-          )
-        } else {
-          return (
-            <React.Fragment key={message.id}>
-              <div className="text-green-500">
-                {message.role} {message.display}
+            <React.Fragment key={id}>
+              <div className="bg-red-500 p-2 text-white">
+                Role not specified or invalid: {content}
               </div>
               {index < messages.length - 1 && <Separator className="my-4" />}
             </React.Fragment>
-          )
+          );
+        } else {
+          return (
+            <React.Fragment key={id}>
+              <div className={`p-2 text-${role === 'user' ? 'blue' : 'green'}-500`}>
+                {role}: {content}
+              </div>
+              {index < messages.length - 1 && <Separator className="my-4" />}
+            </React.Fragment>
+          );
         }
       })}
     </div>
-  )
-}
+  );
+};
