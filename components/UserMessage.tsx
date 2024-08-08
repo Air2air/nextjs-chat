@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { MessageType } from '@/lib/types'
 import { IconUser } from '@/components/ui/icons'
 import { MemoizedReactMarkdown } from '@/utils/markdown'
@@ -17,18 +17,12 @@ export const UserMessage: React.FC<UserMessageProps> = ({ message }) => {
         <IconUser />
       </div>
       <div className="message-content flex-1 px-1 ml-4 space-y-2 overflow-hidden">
-        {message.display ? (
-          <Suspense fallback={<div>Loading...</div>}>
-            {message.display}
-          </Suspense>
-        ) : (
-          <MemoizedReactMarkdown
-            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-            remarkPlugins={[remarkGfm, remarkMath]}
-          >
-            {message.content || 'No content available'}
-          </MemoizedReactMarkdown>
-        )}
+        <MemoizedReactMarkdown
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          remarkPlugins={[remarkGfm, remarkMath]}
+        >
+          {message.content || 'No content available'}
+        </MemoizedReactMarkdown>
       </div>
     </div>
   )

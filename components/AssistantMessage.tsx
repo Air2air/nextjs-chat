@@ -1,35 +1,49 @@
-import React, { Suspense } from 'react'
-import { MessageType } from '@/lib/types'
-import { IconOpenAI } from '@/components/ui/icons'
-import { MemoizedReactMarkdown } from '@/utils/markdown'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
+import React from 'react';
+import { Separator } from '@/components/ui/separator';
+import { MessageType } from '@/lib/types';
 
-interface AssistantMessageProps {
-  message: MessageType
+interface ChatListProps {
+  messages: MessageType[];
 }
 
-export const AssistantMessage: React.FC<AssistantMessageProps> = ({ message }) => {
-  console.log('Rendering AssistantMessage:', message)
+export const ChatList: React.FC<ChatListProps> = ({ messages }) => {
+  if (messages.length === 0) {
+    return null;
+  }
+
+  console.log('Rendering ChatList with messages:', messages);
+
   return (
-    <div className="assistant-message group relative mb-4 flex items-start bg-green-100 p-4 rounded">
-      <div className="icon-container flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow">
-        <IconOpenAI />
-      </div>
-      <div className="message-content flex-1 px-1 ml-4 space-y-2 overflow-hidden">
-        {message.display ? (
-          <Suspense fallback={<div>Loading...</div>}>
-            {message.display}
-          </Suspense>
-        ) : (
-          <MemoizedReactMarkdown
-            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-            remarkPlugins={[remarkGfm, remarkMath]}
-          >
-            {message.content || 'No content available'}
-          </MemoizedReactMarkdown>
-        )}
-      </div>
+    <div className="chat-list relative mx-auto max-w-2xl px-4">
+      {messages.map((message, index) => {
+        const { id, role, content } = message;
+
+        console.log('Processing message:', message);
+
+        if (!role || (role !== 'user' && role !== 'assistant')) {
+          return (
+            <React.Fragment key={id}>
+              <div className="bg-red-500 p-2 text-white">
+                Role not specified or invalid: {content}
+              </div>
+              {index < messages.length - 1 && <Separator className="my-4" />}
+            </React.Fragment>
+          );
+        } else {
+          return (
+            <React.Fragment key={id}>
+              <div className={`p-2 text-${role === 'user' ? 'blue' : 'green'}-500`}>
+                {role === 'assistant' ? (
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                ) : (
+                  content
+                )}
+              </div>
+              {index < messages.length - 1 && <Separator className="my-4" />}
+            </React.Fragment>
+          );
+        }
+      })}
     </div>
-  )
-}
+  );
+};

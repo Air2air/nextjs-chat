@@ -42,7 +42,7 @@ async function submitUserMessage(content: string) {
       ...aiState.get().messages.map((message: MessageType) => ({
         role: message.role,
         content: message.content,
-        name: message.name
+
       }))
     ],
     temperature: aiConfigs.temperature,
